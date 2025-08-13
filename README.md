@@ -1,4 +1,4 @@
-# Stanford LaTeX Poster Template
+# Stanford LaTeX Poster Template forked from https://github.com/RylanSchaeffer/Stanford-LaTeX-Poster-Template
 
 ![](poster_pic.png)
 
