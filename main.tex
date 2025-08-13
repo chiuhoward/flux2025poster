@@ -8,17 +8,27 @@
 % Packages
 % ====================
 
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[size=custom,width=120,height=72,scale=1.0]{beamerposter}
+\usepackage[size=custom,width=36,height=48,scale=0.5]{beamerposter}
 \usetheme{gemini}
-% \usecolortheme{uchicago}
 \usecolortheme{stanford}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
+\usepackage{fontspec}
+\usepackage{exscale}
+\usepackage{tabularx}
+\usepackage{colortbl} % For \rowcolor
+\usepackage{xcolor}   % For color definitions
+\usepackage{tcolorbox}
+\usepackage[backend=biber,style=numeric,maxnames=3,minnames=1]{biblatex}
+\addbibresource{poster.bib} % Adjust the filename as needed
+\usepackage{amssymb}
+
+\setbeamercolor{headline}{bg=cardinalred,fg=white}
+\setbeamercolor{footline}{bg=footergray,fg=darkcardinal}
 
 % ====================
 % Lengths
@@ -34,22 +44,25 @@
 \newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
 
 
-\title{Your Title Goes Here}
+\title{How Did a Strength-Based Video-Coaching Intervention Alter Parental Neurocognitive Mechanisms? Evidence From RCT \newline Studies in Low-Income, High-Adversity Contexts}
 
 
-\author{Rylan Schaeffer \inst{1} \and Ben Bitdiddle \inst{2} \and Lem E. Tweakit \inst{2}}
+\author{\fontsize{16}{18}\selectfont Howard Chiu \inst{1} \and Nicole Giuliani \inst{2} \and Sihong Liu \inst{3} \and Phil Fisher \inst{3} }
 
-\institute[shortinst]{\inst{1} Department of Computer Science}
-\institute[shortinst]{\inst{1} Computer Science, Stanford \samelineand \inst{2} Another Institute}
+\institute[shortinst]{%
+  \inst{1} Graduate School of Education, Stanford University, Stanford, CA, USA \\ 
+  \inst{2} College of Education, University of Oregon, Eugene, OR, USA \\ 
+  \inst{3} Stanford Center on Early Childhood, Stanford University, Stanford, CA, USA
+}
 
 % ====================
 % Footer (optional)
 % ====================
 
 \footercontent{
-  \href{rylanschaeffer.github.io}{rylanschaeffer.github.io} \hfill
-  NeurIPS 2021 Workshop: Metacognition in the Age of AI \hfill
-  \href{mailto:rylanschaeffer@gmail.com}{rylanschaeffer@gmail.com}}
+  \href{chiuhoward.github.io}{chiuhoward.github.io} \hfill
+  Thank you to all the families that made this research possible! \hfill
+  \href{mailto:howardchiu@stanford.edu}{howardchiu@stanford.edu}}
 % (can be left out to remove footer)
 
 % ====================
@@ -69,12 +82,15 @@
 % This adds the Logos on the top left and top right
 \addtobeamertemplate{headline}{}
 {
-    \begin{tikzpicture}[remember picture,overlay]
-    %   \node [anchor=north west, inner sep=3cm] at ([xshift=0.0cm,yshift=1.0cm]current page.north west)
-    %   {\includegraphics[height=5.0cm]{stanford_logos/Stanford-CS.png}}; % uc-logo-white.eps
-      \node [anchor=north east, inner sep=3cm] at ([xshift=0.0cm,yshift=2.5cm]current page.north east)
-      {\includegraphics[height=7.0cm]{stanford_logos/Block_S_2_color.png}};
-    \end{tikzpicture}
+  \begin{tikzpicture}[remember picture,overlay]
+    \node [anchor=north east, inner sep=3cm] at ([xshift=2.25cm,yshift=-2.2cm]current page.north east)
+    {\includegraphics[width=6.25cm]{stanford_logos/GSE-hor-logo-white.png}};
+  \end{tikzpicture}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \node [anchor=north east, inner sep=3cm] at ([xshift=19.5cm,yshift=-1.35cm]current page.north east)
+    {\includegraphics[width=38.0cm]{stanford_logos/stanford-line2-10-white.png}};
+  \end{tikzpicture}
 }
 
 \begin{frame}[t]
@@ -82,163 +98,215 @@
 \separatorcolumn
 
 \begin{column}{\colwidth}
-
+  \vspace{-15pt}
   \begin{block}{Introduction}
+    Filler
 
-    Some block contents, followed by a diagram, followed by a dummy paragraph.
-
-    \begin{figure}
-      \centering
-      \begin{tikzpicture}[scale=6]
-        \draw[step=0.25cm,color=gray] (-1,-1) grid (1,1);
-        \draw (1,0) -- (0.2,0.2) -- (0,1) -- (-0.2,0.2) -- (-1,0)
-          -- (-0.2,-0.2) -- (0,-1) -- (0.2,-0.2) -- cycle;
-      \end{tikzpicture}
-      \caption{A figure caption.}
-    \end{figure}
-
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultricies
-    eget libero ac ullamcorper. Integer et euismod ante. Aenean vestibulum
-    lobortis augue, ut lobortis turpis rhoncus sed. Proin feugiat nibh a
-    lacinia dignissim. Proin scelerisque, risus eget tempor fermentum, ex
-    turpis condimentum urna, quis malesuada sapien arcu eu purus.
-
-  \end{block}
-
-  \begin{block}{Background: Metacognition}
-
-    Nam vulputate nunc felis, non condimentum lacus porta ultrices. Nullam sed
-    sagittis metus. Etiam consectetur gravida urna quis suscipit.
-
-    \begin{itemize}
-      \item \textbf{Mauris tempor} risus nulla, sed ornare
-      \item \textbf{Libero tincidunt} a duis congue vitae
-      \item \textbf{Dui ac pretium} morbi justo neque, ullamcorper
-    \end{itemize}
-
-    Eget augue porta, bibendum venenatis tortor.
-
-  \end{block}
-  
-    \begin{block}{Background: Reinforcement Learning}
+    \begin{columns}[t] % Ensure top alignment
+      % Left column with the TikZ picture
+      \begin{column}{0.45\textwidth}
+        \vspace{5pt}
+        \begin{tikzpicture}
+          % Actual age bar (longer bar)
+          \filldraw[fill=blue!30, draw=none] (0,0) rectangle (6,1);
+          
+          % Predicted age bar (shorter bar)
+          \filldraw[fill=orange!60, draw=none] (0,0) rectangle (4,1);
+          
+          % Text annotations
+          \node at (2,0.5) {Predicted Age};
+          \node at (3,1.3) {Actual Age};
+          
+          % Arrow showing the brain age gap
+          \draw[<->,thick] (4.2, 0.7) -- (5.8, 0.7) node[midway, below] {Gap};
+          
+          % Additional arrows
+          \draw[<-,thick] (0.2, 1.3) -- (1.8, 1.3);
+          \draw[->,thick] (4.2, 1.3) -- (5.8, 1.3);
+        \end{tikzpicture}
+      \end{column}
     
-    \end{block}
+      % Right column with the colored text box
+      \begin{column}{0.5\textwidth}
+        \vspace{-20pt} % Adjust this value to vertically align
+        \begin{tcolorbox}[colback=blue!10!white, colframe=blue!40!black, width=\linewidth]
+          {\RaggedRight{Can we conceptualize a \\ positive brain age gap as a distal summary statistic for \textbf{poorer} infant health?}}
+        \end{tcolorbox}
+      \end{column}
+    \end{columns}
+  \end{block}
 
-  \begin{alertblock}{A highlighted block}
+  \vspace{-5pt}
 
-    This block catches your eye, so \textbf{important stuff} should probably go
-    here.
+  \begin{block}{Methods}
+    \begin{tikzpicture}[node distance=3cm, auto]
+        % Define block styles
+        \tikzstyle{block} = [rectangle, draw, fill=cardinalred, 
+        text width=6em, text centered, rounded corners, minimum height=3em, font=\small, text=white]
+        \tikzstyle{line} = [draw, -latex']
 
-    Curabitur eu libero vehicula, cursus est fringilla, luctus est. Morbi
-    consectetur mauris quam, at finibus elit auctor ac. Aliquam erat volutpat.
-    Aenean at nisl ut ex ullamcorper eleifend et eu augue. Aenean quis velit
-    tristique odio convallis ultrices a ac odio.
+        % Nodes
+        \node [block] (dmridata) {Raw diffusion MRI data};
+        \node [block, right of=dmridata, xshift = 0.25cm] (qsiprep) {Preprocessing in QSIprep$^1$};
+        \node [block, right of=qsiprep, xshift = 0.25cm] (pyAFQ) {Reconstruction \\ and \\ segmentation of whole brain tractogram in pyAFQ$^3$};
+        \node [block, right of=pyAFQ, xshift = 0.25cm] (AFQInsight) {Models trained on tract profiles and target features in AFQ-Insight$^5$};
 
+        % Lines
+        \path [line] (dmridata) -- (qsiprep);
+        \path [line] (qsiprep) -- (pyAFQ);
+        \path [line] (pyAFQ) -- (AFQInsight);
+    \end{tikzpicture}
+    
+    \vspace{-10pt}
+    
     \begin{itemize}
-      \item \textbf{Fusce dapibus tellus} vel tellus semper finibus. In
-        consequat, nibh sed mattis luctus, augue diam fermentum lectus.
-      \item \textbf{In euismod erat metus} non ex. Vestibulum luctus augue in
-        mi condimentum, at sollicitudin lorem viverra.
-      \item \textbf{Suspendisse vulputate} mauris vel placerat consectetur.
-        Mauris semper, purus ac hendrerit molestie, elit mi dignissim odio, in
-        suscipit felis sapien vel ex.
+        \item 3 Models
+        \begin{itemize}
+            \normalsize % Set the font size to normal for sub-items
+            \item Principal components regression (PCR) - No regularization
+            \item Lasso principal components regression (PCR-Lasso) - L1 regularization enforces sparsity
+            \item Bundle-wise principal components regression with sparse group lasso penalties (PCR-SGL) - L1 and L2 regularization
+        \end{itemize}
+        \vspace{10pt}
+        \item 3 Targets
+        \begin{itemize}
+            \normalsize % Set the font size to normal for sub-items
+            \item GA (age since conception)
+            \item Chronological age (CA; age since delivery)
+            \item Post-menstrual age (PMA) at scan (sum of GA + CA)
+        \end{itemize}
     \end{itemize}
 
-    Aenean tincidunt risus eros, at gravida lorem sagittis vel. Vestibulum ante
-    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.
+    \vspace{10pt}
 
-  \end{alertblock}
+        \begin{tikzpicture}
+        % Define colors and dimensions
+        \def\barHeight{0.8}         % Height of each bar
+        \def\barLengthTotal{5}       % Total length of each bar (representing 100% of data)
+        \def\testBarLength{1}        % Length of test set (20%)
+        \def\trainBarLength{4}       % Length of training set (80%)
+        \def\hOffset{0.7}            % Horizontal displacement between splits
+        \def\vOffset{0.4}            % Vertical displacement between splits
+        \def\nSplits{5}              % Number of splits
+        \def\offset{0.4}             % Text offset for better centering
+    
+        % Loop through and draw the 5 displaced bars for each split
+        \foreach \i in {1,...,\nSplits} {
+            % Calculate vertical and horizontal shift for each bar
+            \pgfmathsetmacro{\xShift}{(\i-1)*\hOffset}
+            \pgfmathsetmacro{\yShift}{(\i-1)*\vOffset}
+            \pgfmathsetmacro{\testStart}{(\i-1)*\testBarLength} % Test set shift for highlighting
+            
+            % Total bar length
+            \draw[fill=none, draw=black] 
+            (\xShift, \yShift) rectangle (\xShift+\barLengthTotal, \yShift+\barHeight);
+    
+            % Highlight the test set section (20% of data)
+            \filldraw[fill=blue!40, draw=black] 
+            (\xShift+\testStart, \yShift) rectangle (\xShift+\testStart+\testBarLength, \yShift+\barHeight);
+            
+            % Fill the remaining part of the bar for the training set
+            \filldraw[fill=orange!60, draw=black] 
+            (\xShift, \yShift) rectangle (\xShift+\testStart, \yShift+\barHeight);
+            \filldraw[fill=orange!60, draw=black] 
+            (\xShift+\testStart+\testBarLength, \yShift) rectangle (\xShift+\barLengthTotal, \yShift+\barHeight);
+        }
+
+        % Text annotations with smaller font
+        \node[font=\small] at (\xShift+\barLengthTotal, \yShift+\barHeight+1.25) {Train (80\% of data)};
+        \node[font=\small] at (\xShift+\barLengthTotal+2.3, \yShift+\barHeight+1.25) {Test};
+            
+        % Repetition arrow
+        \draw[->, thick] (\xShift+\barLengthTotal+2.5, \yShift+\barHeight) -- ++(5.5,0)
+        node[midway, above] {Repeat nested cross-validation};
+    
+    \end{tikzpicture}
+
+
+    \vspace{10pt}
+    
+    \begin{tikzpicture}[node distance=3cm, auto]
+        % Define block styles
+        \tikzstyle{block} = [rectangle, draw, fill=paloaltogreen, 
+        text width=6em, text centered, rounded corners, minimum height=3em, font=\small, text=white]
+        \tikzstyle{line} = [draw, -latex']
+
+        % Nodes
+        \node [block] (rawdata) {Raw data \\ available with T1, pe0 and pe1 \\ (\textit{n} = 359)};
+        \node [block, right of=rawdata, xshift = 0.25cm] (qsiprep-pe1) {Completed QSIprep \\ (\textit{n} = 316)};
+        \node [block, right of=qsiprep-pe1, xshift = 0.25cm] (pyAFQ-pe1) {Completed pyAFQ \\ (\textit{n} = 287)};
+        \node [block, right of=pyAFQ-pe1, xshift = 0.25cm] (AFQInsight-pe1) {WM features included in brain age model after passing QC \\ (\textit{n} = 184)};
+
+        % Lines
+        \path [line] (rawdata) -- (qsiprep-pe1);
+        \path [line] (qsiprep-pe1) -- (pyAFQ-pe1);
+        \path [line] (pyAFQ-pe1) -- (AFQInsight-pe1);
+    \end{tikzpicture}
+
+    \vspace{-2pt}
+    Their health acuity was evaluated based on a sum of binary indicators for 4 major comorbidities of prematurity (mean = 0.69, range: 0 -- 4):
+    \vspace{-5pt}
+    \begin{itemize}
+    \item Sepsis 
+    \item Necrotizing enterocolitis 
+    \item Intraventricular hemorrhages (IVH) of grade 1 and above 
+    \item Bronchopulmonary dysplasia of grade 2 and above 
+    \end{itemize}
+      
+  \end{block}
 
 \end{column}
 
 \separatorcolumn
 
 \begin{column}{\colwidth}
-
-  \begin{block}{A block containing an enumerated list}
-
-    Vivamus congue volutpat elit non semper. Praesent molestie nec erat ac
-    interdum. In quis suscipit erat. \textbf{Phasellus mauris felis, molestie
-    ac pharetra quis}, tempus nec ante. Donec finibus ante vel purus mollis
-    fermentum. Sed felis mi, pharetra eget nibh a, feugiat eleifend dolor. Nam
-    mollis condimentum purus quis sodales. Nullam eu felis eu nulla eleifend
-    bibendum nec eu lorem. Vivamus felis velit, volutpat ut facilisis ac,
-    commodo in metus.
-
-    \begin{enumerate}
-      \item \textbf{Morbi mauris purus}, egestas at vehicula et, convallis
-        accumsan orci. Orci varius natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus.
-      \item \textbf{Cras vehicula blandit urna ut maximus}. Aliquam blandit nec
-        massa ac sollicitudin. Curabitur cursus, metus nec imperdiet bibendum,
-        velit lectus faucibus dolor, quis gravida metus mauris gravida turpis.
-      \item \textbf{Vestibulum et massa diam}. Phasellus fermentum augue non
-        nulla accumsan, non rhoncus lectus condimentum.
-    \end{enumerate}
-
+  \vspace{-15pt}
+  \begin{block}{Participants (\textit{n} = 184; males = 104) were infants born at \textless 32 weeks GA. CA and GA were highly negatively correlated (\textit{r} = -0.85).}
+    \vspace{-5pt}
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[clip, width=0.8\textwidth]{age_at_scan.jpg}
+      \label{fig:age_at_scan}
+    \end{figure}
   \end{block}
+  \vspace{-20pt}
+  
+  \begin{block}{Right anterior thalamic radiation (ATR) microstructure contributes the most to the prediction of brain age in this sample.}
+    Filler
 
-  \begin{block}{Fusce aliquam magna velit}
-
-    Et rutrum ex euismod vel. Pellentesque ultricies, velit in fermentum
-    vestibulum, lectus nisi pretium nibh, sit amet aliquam lectus augue vel
-    velit. Suspendisse rhoncus massa porttitor augue feugiat molestie. Sed
-    molestie ut orci nec malesuada. Sed ultricies feugiat est fringilla
-    posuere.
-
+    \vspace{-10pt}
+    
     \begin{figure}
       \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-            scale only axis,
-            no markers,
-            domain=0:2*pi,
-            samples=100,
-            axis lines=center,
-            axis line style={-},
-            ticks=none]
-          \addplot[red] {sin(deg(x))};
-          \addplot[blue] {cos(deg(x))};
-        \end{axis}
-      \end{tikzpicture}
-      \caption{Another figure caption.}
+      \includegraphics[clip, width=0.8\textwidth]{sgl_both.jpg}
     \end{figure}
+    \vspace{-20pt}  % Adjust the value to control the space
 
-  \end{block}
-
-  \begin{block}{Nam cursus consequat egestas}
-
-    Nulla eget sem quam. Ut aliquam volutpat nisi vestibulum convallis. Nunc a
-    lectus et eros facilisis hendrerit eu non urna. Interdum et malesuada fames
-    ac ante \textit{ipsum primis} in faucibus. Etiam sit amet velit eget sem
-    euismod tristique. Praesent enim erat, porta vel mattis sed, pharetra sed
-    ipsum. Morbi commodo condimentum massa, \textit{tempus venenatis} massa
-    hendrerit quis. Maecenas sed porta est. Praesent mollis interdum lectus,
-    sit amet sollicitudin risus tincidunt non.
-
-    Etiam sit amet tempus lorem, aliquet condimentum velit. Donec et nibh
-    consequat, sagittis ex eget, dictum orci. Etiam quis semper ante. Ut eu
-    mauris purus. Proin nec consectetur ligula. Mauris pretium molestie
-    ullamcorper. Integer nisi neque, aliquet et odio non, sagittis porta justo.
-
-    \begin{itemize}
-      \item \textbf{Sed consequat} id ante vel efficitur. Praesent congue massa
-        sed est scelerisque, elementum mollis augue iaculis.
-        \begin{itemize}
-          \item In sed est finibus, vulputate
-            nunc gravida, pulvinar lorem. In maximus nunc dolor, sed auctor eros
-            porttitor quis.
-          \item Fusce ornare dignissim nisi. Nam sit amet risus vel lacus
-            tempor tincidunt eu a arcu.
-          \item Donec rhoncus vestibulum erat, quis aliquam leo
-            gravida egestas.
-        \end{itemize}
-      \item \textbf{Sed luctus, elit sit amet} dictum maximus, diam dolor
-        faucibus purus, sed lobortis justo erat id turpis.
-      \item \textbf{Pellentesque facilisis dolor in leo} bibendum congue.
-        Maecenas congue finibus justo, vitae eleifend urna facilisis at.
-    \end{itemize}
-
+    
+    \begin{columns}[t] % Ensure top alignment
+        \begin{column}{0.53\textwidth}
+            \vspace{-10pt}
+            \begin{figure} % sub-17055, sub-17044
+            \centering  \includegraphics[clip,width=\textwidth]{brain_2.png}
+            \end{figure}
+      \end{column}
+    
+      % Right column with the colored text box
+      \begin{column}{0.46\textwidth}
+        \vspace{-10pt}
+        \begin{tcolorbox}[colback=gray!50, colframe=cardinalred, width=\linewidth]
+          {\fontsize{9.5}{10}\selectfont
+          \begin{itemize}
+            \item \textcolor[rgb]{1.0, 1.0, 0.4}{\rule{0.8cm}{0.3cm}} Left Arcuate (ARC)
+            \item \textcolor[rgb]{0.2, 0.4, 0.6}{\rule{0.8cm}{0.3cm}} Left Anterior Thalamic Radiation (ATR) 
+            \item \textcolor[rgb]{1.0, 0.4, 0.0}{\rule{0.8cm}{0.3cm}} Left Superior Longitudinal Fasciculus (SLF) 
+            \item \textcolor[rgb]{0.0, 0.6, 0.2}{\rule{0.8cm}{0.3cm}} Left Uncinate (UNC)
+          \end{itemize}
+          Left hemisphere tracts plotted for illustrative purposes. Tract endpoints have been clipped in pyAFQ.}
+        \end{tcolorbox}
+      \end{column}
+    \end{columns}
+    
   \end{block}
 
 \end{column}
@@ -246,80 +314,77 @@
 \separatorcolumn
 
 \begin{column}{\colwidth}
+  \vspace{-15pt}
+  \begin{block}{Infant WM features explain 21\% of variance in PMA at scan. Including both FA and MD increases test $R^2$.}
 
-  \begin{block}{A block containing some math}
-
-    Nullam non est elit. In eu ornare justo. Maecenas porttitor sodales lacus,
-    ut cursus augue sodales ac.
-
-    $$
-    \int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}
-    $$
-
-    Interdum et malesuada fames $\{1, 4, 9, \ldots\}$ ac ante ipsum primis in
-    faucibus. Cras eleifend dolor eu nulla suscipit suscipit. Sed lobortis non
-    felis id vulputate.
-
-    \heading{A heading inside a block}
-
-    Praesent consectetur mi $x^2 + y^2$ metus, nec vestibulum justo viverra
-    nec. Proin eget nulla pretium, egestas magna aliquam, mollis neque. Vivamus
-    dictum $\mathbf{u}^\intercal\mathbf{v}$ sagittis odio, vel porta erat
-    congue sed. Maecenas ut dolor quis arcu auctor porttitor.
-
-    \heading{Another heading inside a block}
-
-    Sed augue erat, scelerisque a purus ultricies, placerat porttitor neque.
-    Donec $P(y \mid x)$ fermentum consectetur $\nabla_x P(y \mid x)$ sapien
-    sagittis egestas. Duis eget leo euismod nunc viverra imperdiet nec id
-    justo.
-
-  \end{block}
-
-  \begin{block}{Nullam vel erat at velit convallis laoreet}
-
-    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-    inceptos himenaeos. Phasellus libero enim, gravida sed erat sit amet,
-    scelerisque congue diam. Fusce dapibus dui ut augue pulvinar iaculis.
-
-    \begin{table}
+    Filler. 
+    \begin{table}[ht]
       \centering
-      \begin{tabular}{l r r c}
+      \fontsize{9}{11}\selectfont
+      \begin{tabularx}{\textwidth}{l c c c c c c}
         \toprule
-        \textbf{First column} & \textbf{Second column} & \textbf{Third column} & \textbf{Fourth} \\
+        \textbf{Model} & \textbf{Target} & \textbf{Train $R^2$} & \textbf{Test $R^2$} & \textbf{Train MAE} &
+        \textbf{Test MAE} \\
         \midrule
-        Foo & 13.37 & 384,394 & $\alpha$ \\
-        Bar & 2.17 & 1,392 & $\beta$ \\
-        Baz & 3.14 & 83,742 & $\delta$ \\
-        Qux & 7.59 & 974 & $\gamma$ \\
+         PCR & PMA at scan & 0.559 & 0.198 & 8.14 & 9.84 \\
+        \midrule
+        \rowcolor{yellow!50} PCR-Lasso & PMA at scan & 0.491 & 0.208 & 6.99 & 7.67 \\
+        PCR-Lasso (FA only) & PMA at scan & 0.428 & 0.144 & 6.75 & 7.43 \\
+        PCR-Lasso (MD only) & PMA at scan & 0.180 & 0.047 & 8.30 & 8.71 \\
+        \midrule
+        \rowcolor{yellow!50} PCR-SGL & PMA at scan & 0.264 & 0.104 & 8.05 & 8.19 \\
+        PCR-SGL (FA only) & PMA at scan & 0.220 & 0.054 & 8.14 & 8.25 \\
+        PCR-SGL (MD only) & PMA at scan & 0.170 & 0.041 & 8.47 & 8.82 \\
         \bottomrule
-      \end{tabular}
-      \caption{A table caption.}
+      \end{tabularx}
     \end{table}
-
-    Donec quis posuere ligula. Nunc feugiat elit a mi malesuada consequat. Sed
-    imperdiet augue ac nibh aliquet tristique. Aenean eu tortor vulputate,
-    eleifend lorem in, dictum urna. Proin auctor ante in augue tincidunt
-    tempor. Proin pellentesque vulputate odio, ac gravida nulla posuere
-    efficitur. Aenean at velit vel dolor blandit molestie. Mauris laoreet
-    commodo quam, non luctus nibh ullamcorper in. Class aptent taciti sociosqu
-    ad litora torquent per conubia nostra, per inceptos himenaeos.
-
-    Nulla varius finibus volutpat. Mauris molestie lorem tincidunt, iaculis
-    libero at, gravida ante. Phasellus at felis eu neque suscipit suscipit.
-    Integer ullamcorper, dui nec pretium ornare, urna dolor consequat libero,
-    in feugiat elit lorem euismod lacus. Pellentesque sit amet dolor mollis,
-    auctor urna non, tempus sem.
-
   \end{block}
 
-  \begin{block}{References}
+  \vspace{-15pt}
+  
+  \begin{block}{Brain age gap explains additional 2\% of variance in health acuity above and beyond CA and GA. \\ Variance explained by brain age gap is greater than any WM feature alone (mean tract FA or MD).}
+  
+    \vspace{-25pt}
 
-    \nocite{*}
-    \footnotesize{\bibliographystyle{plain}\bibliography{poster}}
+    \[    
+    \textbf{Model 2:} \quad \mathrm{health\_acuity} \sim \mathrm{1} + \mathrm{CA} + \mathrm{GA} + \mathrm{brain\_age\_gap}
+    \]
 
-  \end{block}
+    \vspace{-15pt}
 
+       \begin{table}[htbp]
+        \centering
+        \fontsize{12}{14}\selectfont
+        \begin{tabularx}{\textwidth}{X c c c}
+        \toprule
+        \textbf{Variables} & \textbf{Model 1} & \textbf{Model 2} & \textbf{Model 3} \\
+        \midrule
+        Intercept & -0.280 & 2.93 & \checkmark \\
+        CA & 0.018*** & 0.005 & \checkmark \\
+        GA & 0.001 & -0.013 & \checkmark \\
+        PMA at Scan Gap & - & 0.019** & - \\
+        Mean Tract FA or MD & - & - & \checkmark \\
+        \midrule
+        \textbf{Likelihood Ratio (LR)} & - & 6.91** & \\
+        \bottomrule
+        \end{tabularx}
+      \end{table}
+      \vspace{-10pt}
+     \caption{\fontsize{10}{12}\selectfont Asterisks denote level of significance: *** $\textit{p} < .001$, ** $\textit{p} < .01$, * $\textit{p} < .05$}
+    \end{block}
+    
+    \vspace{-10pt}  % Adjust the value to control the space
+
+   \begin{tcolorbox}[colback=blue!10!white, colframe=blue!40!black, width=\linewidth, title=\centering \textbf{Conclusion}]
+    The brain age gap \textbf{shows promise} as a summary statistic for infant health, above and beyond information that can be gleaned from age and individual measures of WM microstructure.
+    \end{tcolorbox}
+        
+    \begin{block}{References}
+        \nocite{*}
+        \renewcommand{\bibfont}{\fontsize{6}{7}\selectfont} % Use \footnotesize, \small, \scriptsize, or \tiny as needed
+        \printbibliography
+    \end{block}
+  
 \end{column}
 
 \separatorcolumn
