@@ -23,12 +23,65 @@
 \usepackage{colortbl} % For \rowcolor
 \usepackage{xcolor}   % For color definitions
 \usepackage{tcolorbox}
-\usepackage[backend=biber,style=numeric,maxnames=3,minnames=1]{biblatex}
+\usepackage[backend=biber, style=numeric-comp, maxnames=3, minnames=1, giveninits=true, uniquename=init]{biblatex}
 \addbibresource{poster.bib} % Adjust the filename as needed
 \usepackage{amssymb}
 
 \setbeamercolor{headline}{bg=cardinalred,fg=white}
 \setbeamercolor{footline}{bg=footergray,fg=darkcardinal}
+
+% ====================
+% More biblatex kwargs
+% ====================
+
+% Remove unnecessary fields
+\AtEveryBibitem{
+  \clearfield{issn}
+  \clearfield{url}
+  \clearfield{doi}
+  \clearfield{eprint}
+  \clearfield{urldate}
+}
+
+\AtEveryCitekey{\clearfield{urldate}}
+
+\DeclareFieldFormat{urldate}{}
+
+% Remove "visited on" date
+\DefineBibliographyStrings{english}{
+  urlseen = {}
+}
+
+% Reduce spacing between entries
+\setlength{\bibitemsep}{0pt}
+
+% Customize the way certain fields are printed
+\DeclareFieldFormat[article]{title}{#1}
+\DeclareFieldFormat[article]{volume}{\textbf{#1}}
+\DeclareFieldFormat[article]{number}{(#1)}
+\DeclareFieldFormat{pages}{#1}
+
+% Customize the order and punctuation of fields
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addspace}%
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \usebibmacro{volume+number+eid}%
+  \setunit{\addcolon\space}%
+  \usebibmacro{issue+date}%
+  \setunit{\addcomma\space}%
+  \usebibmacro{issue}%
+  \newunit}
+
+\renewbibmacro*{volume+number+eid}{%
+  \printfield{volume}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}
 
 % ====================
 % Lengths
@@ -63,15 +116,7 @@
   \href{chiuhoward.github.io}{chiuhoward.github.io} \hfill
   Thank you to all the families that made this research possible! \hfill
   \href{mailto:howardchiu@stanford.edu}{howardchiu@stanford.edu}}
-% (can be left out to remove footer)
 
-% ====================
-% Logo (optional)
-% ====================
-
-% use this to include logos on the left and/or right side of the header:
-% \logoright{\includegraphics[height=7cm]{logos/cs-logo-maroon.png}}
-% \logoleft{\includegraphics[height=7cm]{logos/cs-logo-maroon.png}}
 
 % ====================
 % Body
@@ -88,236 +133,113 @@
   \end{tikzpicture}
 
   \begin{tikzpicture}[remember picture,overlay]
-    \node [anchor=north east, inner sep=3cm] at ([xshift=19.5cm,yshift=-1.35cm]current page.north east)
-    {\includegraphics[width=38.0cm]{stanford_logos/stanford-line2-10-white.png}};
+    \node [anchor=north east, inner sep=3cm] at ([xshift=18.70cm,yshift=-1.35cm]current page.north east)
+    {\includegraphics[width=36.9cm]{stanford_logos/stanford-line2-10-white.png}};
+  \end{tikzpicture}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \node [anchor=north west, inner sep=3cm] at ([xshift=-1.25cm,yshift=-2.2cm]current page.north west)
+    {\includegraphics[width=2.25cm]{osf-qr.png}};
   \end{tikzpicture}
 }
 
 \begin{frame}[t]
+% Top half - two columns
+\begin{columns}[t]
+\begin{column}{\textwidth}
+  \vspace{-15pt}
+  \begin{block}{Introduction}
+    \begin{columns}[t]
+      \begin{column}{0.48\textwidth}
+        \begin{figure}[ht]
+          \centering
+          \includegraphics[clip, width=0.75\textwidth]{find.png}
+          \label{fig:find}
+        \end{figure}
+        Filler text on the FIND intervention. This text describes the image above and provides context for the intervention method of the study.
+
+        \begin{figure}[ht]
+          \centering
+          \includegraphics[clip, width=0.75\textwidth]{model.png}
+          \label{fig:model}
+        \end{figure}
+        Preliminary evidence from early pilot trials suggests that FIND may lead to significant changes in parent self-efficacy (Liu et al., 2021) and brain-related improvements in executive function (Giuliani et al., 2019). FIND was found to increase mothers’ inhibitory control and self-evaluation (obtained via behavioral assessment) and relevant neural mechanisms (e.g., clusters in the left inferior frontal gyrus (IFG) and insula for the Correct Stop > Correct Go contrast of the Stop-Signal Task) among middle-income families.  
+      \end{column}
+
+      \begin{column}{0.48\textwidth}
+        \begin{figure}[ht]
+          \centering
+          \includegraphics[clip, width=0.75\textwidth]{servereturn.png}
+          \label{fig:servereturn}
+        \end{figure}
+        Taken from https://developingchild.harvard.edu/resources/briefs/5-steps-for-brain-building-serve-and-return/
+          \begin{block}{Participants}
+
+            \begin{tikzpicture}[node distance=3cm, auto]
+                % Define block styles
+                \tikzstyle{block} = [rectangle, draw, fill=cardinalred, 
+                text width=6em, text centered, rounded corners, minimum height=3em, font=\small, text=white]
+                \tikzstyle{line} = [draw, -latex']
+        
+                % Nodes
+                \node [block] (dmridata) {Raw diffusion MRI data};
+                \node [block, right of=dmridata, xshift = 0.25cm] (qsiprep) {Preprocessing in QSIprep$^1$};
+                \node [block, right of=qsiprep, xshift = 0.25cm] (pyAFQ) {Reconstruction \\ and \\ segmentation of whole brain tractogram in pyAFQ$^3$};
+                \node [block, right of=pyAFQ, xshift = 0.25cm] (AFQInsight) {Models trained on tract profiles and target features in AFQ-Insight$^5$};
+        
+                % Lines
+                \path [line] (dmridata) -- (qsiprep);
+                \path [line] (qsiprep) -- (pyAFQ);
+                \path [line] (pyAFQ) -- (AFQInsight);
+            \end{tikzpicture}
+
+          \end{block}
+      \end{column}
+    \end{columns}
+  \end{block}
+\end{column}
+\end{columns}
+
+% Bottom half - three columns
+\vspace{0cm} % Adjust this value to set the separation between top and bottom halves
 \begin{columns}[t]
 \separatorcolumn
 
 \begin{column}{\colwidth}
-  \vspace{-15pt}
-  \begin{block}{Introduction}
-    Filler
-
-    \begin{columns}[t] % Ensure top alignment
-      % Left column with the TikZ picture
-      \begin{column}{0.45\textwidth}
-        \vspace{5pt}
-        \begin{tikzpicture}
-          % Actual age bar (longer bar)
-          \filldraw[fill=blue!30, draw=none] (0,0) rectangle (6,1);
-          
-          % Predicted age bar (shorter bar)
-          \filldraw[fill=orange!60, draw=none] (0,0) rectangle (4,1);
-          
-          % Text annotations
-          \node at (2,0.5) {Predicted Age};
-          \node at (3,1.3) {Actual Age};
-          
-          % Arrow showing the brain age gap
-          \draw[<->,thick] (4.2, 0.7) -- (5.8, 0.7) node[midway, below] {Gap};
-          
-          % Additional arrows
-          \draw[<-,thick] (0.2, 1.3) -- (1.8, 1.3);
-          \draw[->,thick] (4.2, 1.3) -- (5.8, 1.3);
-        \end{tikzpicture}
-      \end{column}
+  \begin{block}{Parent Self-Report Data (n = ???)}
     
-      % Right column with the colored text box
-      \begin{column}{0.5\textwidth}
-        \vspace{-20pt} % Adjust this value to vertically align
-        \begin{tcolorbox}[colback=blue!10!white, colframe=blue!40!black, width=\linewidth]
-          {\RaggedRight{Can we conceptualize a \\ positive brain age gap as a distal summary statistic for \textbf{poorer} infant health?}}
-        \end{tcolorbox}
-      \end{column}
-    \end{columns}
-  \end{block}
-
-  \vspace{-5pt}
-
-  \begin{block}{Methods}
-    \begin{tikzpicture}[node distance=3cm, auto]
-        % Define block styles
-        \tikzstyle{block} = [rectangle, draw, fill=cardinalred, 
-        text width=6em, text centered, rounded corners, minimum height=3em, font=\small, text=white]
-        \tikzstyle{line} = [draw, -latex']
-
-        % Nodes
-        \node [block] (dmridata) {Raw diffusion MRI data};
-        \node [block, right of=dmridata, xshift = 0.25cm] (qsiprep) {Preprocessing in QSIprep$^1$};
-        \node [block, right of=qsiprep, xshift = 0.25cm] (pyAFQ) {Reconstruction \\ and \\ segmentation of whole brain tractogram in pyAFQ$^3$};
-        \node [block, right of=pyAFQ, xshift = 0.25cm] (AFQInsight) {Models trained on tract profiles and target features in AFQ-Insight$^5$};
-
-        % Lines
-        \path [line] (dmridata) -- (qsiprep);
-        \path [line] (qsiprep) -- (pyAFQ);
-        \path [line] (pyAFQ) -- (AFQInsight);
-    \end{tikzpicture}
+    FIND intervention had significant effects in reducing parent fatigue (time by group effect: B = -1.29, SE = .57, p = .024), and had marginally significant effects in increasing caregiver self-efficacy (time by group effect: B = 1.48, SE = .83, p = .076) immediately after completion of the intervention program. 
     
-    \vspace{-10pt}
+    Upon the 6-month follow-up assessment, we found that FIND intervention effects on reduced parent fatigue (B = -1.35, SE = .60, p = .027) and marginally increased self-efficacy (B = 1.53, SE = .89, p = .087) both persisted. 
     
-    \begin{itemize}
-        \item 3 Models
-        \begin{itemize}
-            \normalsize % Set the font size to normal for sub-items
-            \item Principal components regression (PCR) - No regularization
-            \item Lasso principal components regression (PCR-Lasso) - L1 regularization enforces sparsity
-            \item Bundle-wise principal components regression with sparse group lasso penalties (PCR-SGL) - L1 and L2 regularization
-        \end{itemize}
-        \vspace{10pt}
-        \item 3 Targets
-        \begin{itemize}
-            \normalsize % Set the font size to normal for sub-items
-            \item GA (age since conception)
-            \item Chronological age (CA; age since delivery)
-            \item Post-menstrual age (PMA) at scan (sum of GA + CA)
-        \end{itemize}
-    \end{itemize}
-
-    \vspace{10pt}
-
-        \begin{tikzpicture}
-        % Define colors and dimensions
-        \def\barHeight{0.8}         % Height of each bar
-        \def\barLengthTotal{5}       % Total length of each bar (representing 100% of data)
-        \def\testBarLength{1}        % Length of test set (20%)
-        \def\trainBarLength{4}       % Length of training set (80%)
-        \def\hOffset{0.7}            % Horizontal displacement between splits
-        \def\vOffset{0.4}            % Vertical displacement between splits
-        \def\nSplits{5}              % Number of splits
-        \def\offset{0.4}             % Text offset for better centering
-    
-        % Loop through and draw the 5 displaced bars for each split
-        \foreach \i in {1,...,\nSplits} {
-            % Calculate vertical and horizontal shift for each bar
-            \pgfmathsetmacro{\xShift}{(\i-1)*\hOffset}
-            \pgfmathsetmacro{\yShift}{(\i-1)*\vOffset}
-            \pgfmathsetmacro{\testStart}{(\i-1)*\testBarLength} % Test set shift for highlighting
-            
-            % Total bar length
-            \draw[fill=none, draw=black] 
-            (\xShift, \yShift) rectangle (\xShift+\barLengthTotal, \yShift+\barHeight);
-    
-            % Highlight the test set section (20% of data)
-            \filldraw[fill=blue!40, draw=black] 
-            (\xShift+\testStart, \yShift) rectangle (\xShift+\testStart+\testBarLength, \yShift+\barHeight);
-            
-            % Fill the remaining part of the bar for the training set
-            \filldraw[fill=orange!60, draw=black] 
-            (\xShift, \yShift) rectangle (\xShift+\testStart, \yShift+\barHeight);
-            \filldraw[fill=orange!60, draw=black] 
-            (\xShift+\testStart+\testBarLength, \yShift) rectangle (\xShift+\barLengthTotal, \yShift+\barHeight);
-        }
-
-        % Text annotations with smaller font
-        \node[font=\small] at (\xShift+\barLengthTotal, \yShift+\barHeight+1.25) {Train (80\% of data)};
-        \node[font=\small] at (\xShift+\barLengthTotal+2.3, \yShift+\barHeight+1.25) {Test};
-            
-        % Repetition arrow
-        \draw[->, thick] (\xShift+\barLengthTotal+2.5, \yShift+\barHeight) -- ++(5.5,0)
-        node[midway, above] {Repeat nested cross-validation};
-    
-    \end{tikzpicture}
-
-
-    \vspace{10pt}
-    
-    \begin{tikzpicture}[node distance=3cm, auto]
-        % Define block styles
-        \tikzstyle{block} = [rectangle, draw, fill=paloaltogreen, 
-        text width=6em, text centered, rounded corners, minimum height=3em, font=\small, text=white]
-        \tikzstyle{line} = [draw, -latex']
-
-        % Nodes
-        \node [block] (rawdata) {Raw data \\ available with T1, pe0 and pe1 \\ (\textit{n} = 359)};
-        \node [block, right of=rawdata, xshift = 0.25cm] (qsiprep-pe1) {Completed QSIprep \\ (\textit{n} = 316)};
-        \node [block, right of=qsiprep-pe1, xshift = 0.25cm] (pyAFQ-pe1) {Completed pyAFQ \\ (\textit{n} = 287)};
-        \node [block, right of=pyAFQ-pe1, xshift = 0.25cm] (AFQInsight-pe1) {WM features included in brain age model after passing QC \\ (\textit{n} = 184)};
-
-        % Lines
-        \path [line] (rawdata) -- (qsiprep-pe1);
-        \path [line] (qsiprep-pe1) -- (pyAFQ-pe1);
-        \path [line] (pyAFQ-pe1) -- (AFQInsight-pe1);
-    \end{tikzpicture}
-
-    \vspace{-2pt}
-    Their health acuity was evaluated based on a sum of binary indicators for 4 major comorbidities of prematurity (mean = 0.69, range: 0 -- 4):
-    \vspace{-5pt}
-    \begin{itemize}
-    \item Sepsis 
-    \item Necrotizing enterocolitis 
-    \item Intraventricular hemorrhages (IVH) of grade 1 and above 
-    \item Bronchopulmonary dysplasia of grade 2 and above 
-    \end{itemize}
-      
-  \end{block}
-
-\end{column}
-
-\separatorcolumn
-
-\begin{column}{\colwidth}
-  \vspace{-15pt}
-  \begin{block}{Participants (\textit{n} = 184; males = 104) were infants born at \textless 32 weeks GA. CA and GA were highly negatively correlated (\textit{r} = -0.85).}
-    \vspace{-5pt}
     \begin{figure}[ht]
-      \centering
-      \includegraphics[clip, width=0.8\textwidth]{age_at_scan.jpg}
-      \label{fig:age_at_scan}
+        \centering
+        \begin{tikzpicture}
+            \node[anchor=south west,inner sep=0] (image1) at (0,0) {\includegraphics[width=0.7\textwidth]{fatigue.png}};
+            \node[anchor=south west,inner sep=0] (image2) at (0.5\textwidth,0cm) {\includegraphics[width=0.7\textwidth]{selfeff.png}};
+        \end{tikzpicture}
+        \caption{FIND intervention effects on parent fatigue (left) and self-efficacy (right)}
+        \label{fig:combined}
+    \end{figure} 
+    
+    Moreover, parents in the FIND intervention showed marginally decreased parenting distress (B = -2.19, SE = 1.11, p = .051) only in the 6-month follow-up. 
+    
+    \begin{figure}[ht]
+        \centering
+          \includegraphics[clip, width=0.5\textwidth]{distress.png}
+          \label{fig:distress}
     \end{figure}
-  \end{block}
-  \vspace{-20pt}
-  
-  \begin{block}{Right anterior thalamic radiation (ATR) microstructure contributes the most to the prediction of brain age in this sample.}
-    Filler
-
-    \vspace{-10pt}
     
-    \begin{figure}
-      \centering
-      \includegraphics[clip, width=0.8\textwidth]{sgl_both.jpg}
-    \end{figure}
-    \vspace{-20pt}  % Adjust the value to control the space
-
-    
-    \begin{columns}[t] % Ensure top alignment
-        \begin{column}{0.53\textwidth}
-            \vspace{-10pt}
-            \begin{figure} % sub-17055, sub-17044
-            \centering  \includegraphics[clip,width=\textwidth]{brain_2.png}
-            \end{figure}
-      \end{column}
-    
-      % Right column with the colored text box
-      \begin{column}{0.46\textwidth}
-        \vspace{-10pt}
-        \begin{tcolorbox}[colback=gray!50, colframe=cardinalred, width=\linewidth]
-          {\fontsize{9.5}{10}\selectfont
-          \begin{itemize}
-            \item \textcolor[rgb]{1.0, 1.0, 0.4}{\rule{0.8cm}{0.3cm}} Left Arcuate (ARC)
-            \item \textcolor[rgb]{0.2, 0.4, 0.6}{\rule{0.8cm}{0.3cm}} Left Anterior Thalamic Radiation (ATR) 
-            \item \textcolor[rgb]{1.0, 0.4, 0.0}{\rule{0.8cm}{0.3cm}} Left Superior Longitudinal Fasciculus (SLF) 
-            \item \textcolor[rgb]{0.0, 0.6, 0.2}{\rule{0.8cm}{0.3cm}} Left Uncinate (UNC)
-          \end{itemize}
-          Left hemisphere tracts plotted for illustrative purposes. Tract endpoints have been clipped in pyAFQ.}
-        \end{tcolorbox}
-      \end{column}
-    \end{columns}
+    These results replicated our findings from previous FIND pilot and RCT studies and further showed that the intervention can have long-lasting effects on caregivers.
     
   \end{block}
-
 \end{column}
 
 \separatorcolumn
 
 \begin{column}{\colwidth}
-  \vspace{-15pt}
-  \begin{block}{Infant WM features explain 21\% of variance in PMA at scan. Including both FA and MD increases test $R^2$.}
-
-    Filler. 
+  \begin{block}{Stop Signal Response Task (n = ???)}
+    
     \begin{table}[ht]
       \centering
       \fontsize{9}{11}\selectfont
@@ -338,53 +260,46 @@
         \bottomrule
       \end{tabularx}
     \end{table}
-  \end{block}
-
-  \vspace{-15pt}
-  
-  \begin{block}{Brain age gap explains additional 2\% of variance in health acuity above and beyond CA and GA. \\ Variance explained by brain age gap is greater than any WM feature alone (mean tract FA or MD).}
-  
-    \vspace{-25pt}
-
-    \[    
-    \textbf{Model 2:} \quad \mathrm{health\_acuity} \sim \mathrm{1} + \mathrm{CA} + \mathrm{GA} + \mathrm{brain\_age\_gap}
-    \]
-
-    \vspace{-15pt}
-
-       \begin{table}[htbp]
-        \centering
-        \fontsize{12}{14}\selectfont
-        \begin{tabularx}{\textwidth}{X c c c}
-        \toprule
-        \textbf{Variables} & \textbf{Model 1} & \textbf{Model 2} & \textbf{Model 3} \\
-        \midrule
-        Intercept & -0.280 & 2.93 & \checkmark \\
-        CA & 0.018*** & 0.005 & \checkmark \\
-        GA & 0.001 & -0.013 & \checkmark \\
-        PMA at Scan Gap & - & 0.019** & - \\
-        Mean Tract FA or MD & - & - & \checkmark \\
-        \midrule
-        \textbf{Likelihood Ratio (LR)} & - & 6.91** & \\
-        \bottomrule
-        \end{tabularx}
-      \end{table}
-      \vspace{-10pt}
-     \caption{\fontsize{10}{12}\selectfont Asterisks denote level of significance: *** $\textit{p} < .001$, ** $\textit{p} < .01$, * $\textit{p} < .05$}
-    \end{block}
     
-    \vspace{-10pt}  % Adjust the value to control the space
+    Filler text.
+    
+  \end{block}
+\end{column}
 
-   \begin{tcolorbox}[colback=blue!10!white, colframe=blue!40!black, width=\linewidth, title=\centering \textbf{Conclusion}]
-    The brain age gap \textbf{shows promise} as a summary statistic for infant health, above and beyond information that can be gleaned from age and individual measures of WM microstructure.
-    \end{tcolorbox}
-        
-    \begin{block}{References}
-        \nocite{*}
-        \renewcommand{\bibfont}{\fontsize{6}{7}\selectfont} % Use \footnotesize, \small, \scriptsize, or \tiny as needed
-        \printbibliography
-    \end{block}
+\separatorcolumn
+
+\begin{column}{\colwidth}
+  \begin{block}{Parent Self-Evaluation Task (n = ???)}
+    Lorem ipsum blahblah.
+
+            \begin{table}[ht]
+      \centering
+      \fontsize{9}{11}\selectfont
+      \begin{tabularx}{\textwidth}{l c c c c c c}
+        \toprule
+        \textbf{Model} & \textbf{Target} & \textbf{Train $R^2$} & \textbf{Test $R^2$} & \textbf{Train MAE} &
+        \textbf{Test MAE} \\
+        \midrule
+         PCR & PMA at scan & 0.559 & 0.198 & 8.14 & 9.84 \\
+        \midrule
+        \rowcolor{yellow!50} PCR-Lasso & PMA at scan & 0.491 & 0.208 & 6.99 & 7.67 \\
+        PCR-Lasso (FA only) & PMA at scan & 0.428 & 0.144 & 6.75 & 7.43 \\
+        PCR-Lasso (MD only) & PMA at scan & 0.180 & 0.047 & 8.30 & 8.71 \\
+        \midrule
+        \rowcolor{yellow!50} PCR-SGL & PMA at scan & 0.264 & 0.104 & 8.05 & 8.19 \\
+        PCR-SGL (FA only) & PMA at scan & 0.220 & 0.054 & 8.14 & 8.25 \\
+        PCR-SGL (MD only) & PMA at scan & 0.170 & 0.041 & 8.47 & 8.82 \\
+        \bottomrule
+      \end{tabularx}
+    \end{table}
+    
+  \end{block}
   
+  \begin{block}{References}
+    \nocite{*}
+    \renewcommand{\bibfont}{\fontsize{8}{10}\selectfont}
+    \printbibliography[heading=none]
+  \end{block}
 \end{column}
 
 \separatorcolumn
