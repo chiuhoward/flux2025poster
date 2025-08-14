@@ -171,27 +171,49 @@
           \centering
           \includegraphics[clip, width=0.75\textwidth]{servereturn.png}
           \label{fig:servereturn}
-        \end{figure}
-        Taken from https://developingchild.harvard.edu/resources/briefs/5-steps-for-brain-building-serve-and-return/
-          \begin{block}{Participants}
+          \\[0.5em]
+          {\tiny Source: \url{https://developingchild.harvard.edu/resources/briefs/5-steps-for-brain-building-serve-and-return/}}
+        \label{fig:servereturn}
+       \end{figure}
 
-            \begin{tikzpicture}[node distance=3cm, auto]
-                % Define block styles
-                \tikzstyle{block} = [rectangle, draw, fill=cardinalred, 
-                text width=6em, text centered, rounded corners, minimum height=3em, font=\small, text=white]
-                \tikzstyle{line} = [draw, -latex']
+    \begin{block}{Participants}
+
+        \begin{tikzpicture}[node distance=2cm, auto]
+            % Define styles
+            \tikzstyle{findblock} = [rectangle, draw, fill=cardinalred, 
+            text width=4em, text centered, rounded corners, minimum height=3em, font=\small, text=white]
+            \tikzstyle{htpblock} = [rectangle, draw, fill=paloaltogreen, 
+            text width=4em, text centered, rounded corners, minimum height=3em, font=\small, text=white]
+            \tikzstyle{timeline} = [draw, thick, -latex']
+            \tikzstyle{wave} = [font=\normalsize, text centered]
+            \tikzstyle{label} = [font=\footnotesize, text centered]
+            
+            % FIND timeline (top)
+            \node [findblock] (find_w1) {\textbf{\normalsize n = 55}};
+            \node [findblock, right of=find_w1, xshift=2.5cm] (find_w2) {\textbf{\normalsize n = 44}};
+            \node [findblock, right of=find_w2, xshift=3.5cm] (find_w3) {\textbf{\normalsize n = 36}};
+            
+            % HTP timeline (bottom)
+            \node [htpblock, below of=find_w1, yshift=0.5cm] (htp_w1) {\textbf{\normalsize n = 59}};
+            \node [htpblock, right of=htp_w1, xshift=2.5cm] (htp_w2) {\textbf{\normalsize n = 48}};
+            \node [htpblock, right of=htp_w2, xshift=3.5cm] (htp_w3) {\textbf{\normalsize n = 41}};
+            
+            % Timeline arrows
+            \draw [timeline] (find_w1) -- (find_w2) node [midway, above, label, align=center] {\normalsize Intervention \\ \normalsize (10 weeks)};
+            \draw [timeline] (find_w2) -- (find_w3) node [midway, above, label] {\normalsize 6 months};
+            \draw [timeline] (htp_w1) -- (htp_w2);
+            \draw [timeline] (htp_w2) -- (htp_w3);
+            
+            % Timeline labels
+            \node [wave, below of=htp_w1, yshift=1.0cm] {Wave 1};
+            \node [wave, below of=htp_w2, yshift=1.0cm] {Wave 2};
+            \node [wave, below of=htp_w3, yshift=1.0cm] {Wave 3};
+            
+            % Group labels
+            \node [font=\bfseries, left of=find_w1, xshift=-1.5cm] {FIND};
+            \node [font=\bfseries, left of=htp_w1, xshift=-1.5cm, text width=3.4cm, align=center] {HTP \\ (Active Control)};
         
-                % Nodes
-                \node [block] (dmridata) {Raw diffusion MRI data};
-                \node [block, right of=dmridata, xshift = 0.25cm] (qsiprep) {Preprocessing in QSIprep$^1$};
-                \node [block, right of=qsiprep, xshift = 0.25cm] (pyAFQ) {Reconstruction \\ and \\ segmentation of whole brain tractogram in pyAFQ$^3$};
-                \node [block, right of=pyAFQ, xshift = 0.25cm] (AFQInsight) {Models trained on tract profiles and target features in AFQ-Insight$^5$};
-        
-                % Lines
-                \path [line] (dmridata) -- (qsiprep);
-                \path [line] (qsiprep) -- (pyAFQ);
-                \path [line] (pyAFQ) -- (AFQInsight);
-            \end{tikzpicture}
+        \end{tikzpicture}
 
           \end{block}
       \end{column}
@@ -206,7 +228,7 @@
 \separatorcolumn
 
 \begin{column}{\colwidth}
-  \begin{block}{Parent Self-Report Data (n = ???)}
+  \begin{block}{Parent Self-Report Data (n = 114)}
     
     FIND intervention had significant effects in reducing parent fatigue (time by group effect: B = -1.29, SE = .57, p = .024), and had marginally significant effects in increasing caregiver self-efficacy (time by group effect: B = 1.48, SE = .83, p = .076) immediately after completion of the intervention program. 
     
@@ -238,7 +260,55 @@
 \separatorcolumn
 
 \begin{column}{\colwidth}
-  \begin{block}{Stop Signal Response Task (n = ???)}
+  
+  \begin{block}{Parent Self-Evaluation Task (n = ???)}
+    
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[clip, width=\textwidth]{pset.png}
+      \label{fig:pset}
+    \end{figure}
+    
+    Lorem ipsum blahblah.
+
+    \begin{table}[ht]
+      \centering
+      \fontsize{9}{11}\selectfont
+      \begin{tabularx}{\textwidth}{l c c c c c c}
+        \toprule
+        \textbf{Model} & \textbf{Target} & \textbf{Train $R^2$} & \textbf{Test $R^2$} & \textbf{Train MAE} &
+        \textbf{Test MAE} \\
+        \midrule
+         PCR & PMA at scan & 0.559 & 0.198 & 8.14 & 9.84 \\
+        \midrule
+        \rowcolor{yellow!50} PCR-Lasso & PMA at scan & 0.491 & 0.208 & 6.99 & 7.67 \\
+        PCR-Lasso (FA only) & PMA at scan & 0.428 & 0.144 & 6.75 & 7.43 \\
+        PCR-Lasso (MD only) & PMA at scan & 0.180 & 0.047 & 8.30 & 8.71 \\
+        \midrule
+        \rowcolor{yellow!50} PCR-SGL & PMA at scan & 0.264 & 0.104 & 8.05 & 8.19 \\
+        PCR-SGL (FA only) & PMA at scan & 0.220 & 0.054 & 8.14 & 8.25 \\
+        PCR-SGL (MD only) & PMA at scan & 0.170 & 0.041 & 8.47 & 8.82 \\
+        \bottomrule
+      \end{tabularx}
+    \end{table}
+    
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+    
+      \begin{block}{Stop Signal Response Task (n = ???)}
+
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[clip, width=0.6\textwidth]{stopsignal.png}
+        \\[0.5em]
+        {\tiny Source: Gaillard et al. (2020)}
+      \label{fig:stopsignal}
+    \end{figure}
     
     \begin{table}[ht]
       \centering
@@ -262,36 +332,6 @@
     \end{table}
     
     Filler text.
-    
-  \end{block}
-\end{column}
-
-\separatorcolumn
-
-\begin{column}{\colwidth}
-  \begin{block}{Parent Self-Evaluation Task (n = ???)}
-    Lorem ipsum blahblah.
-
-            \begin{table}[ht]
-      \centering
-      \fontsize{9}{11}\selectfont
-      \begin{tabularx}{\textwidth}{l c c c c c c}
-        \toprule
-        \textbf{Model} & \textbf{Target} & \textbf{Train $R^2$} & \textbf{Test $R^2$} & \textbf{Train MAE} &
-        \textbf{Test MAE} \\
-        \midrule
-         PCR & PMA at scan & 0.559 & 0.198 & 8.14 & 9.84 \\
-        \midrule
-        \rowcolor{yellow!50} PCR-Lasso & PMA at scan & 0.491 & 0.208 & 6.99 & 7.67 \\
-        PCR-Lasso (FA only) & PMA at scan & 0.428 & 0.144 & 6.75 & 7.43 \\
-        PCR-Lasso (MD only) & PMA at scan & 0.180 & 0.047 & 8.30 & 8.71 \\
-        \midrule
-        \rowcolor{yellow!50} PCR-SGL & PMA at scan & 0.264 & 0.104 & 8.05 & 8.19 \\
-        PCR-SGL (FA only) & PMA at scan & 0.220 & 0.054 & 8.14 & 8.25 \\
-        PCR-SGL (MD only) & PMA at scan & 0.170 & 0.041 & 8.47 & 8.82 \\
-        \bottomrule
-      \end{tabularx}
-    \end{table}
     
   \end{block}
   
